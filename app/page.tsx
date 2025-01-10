@@ -1,33 +1,22 @@
-import { TrackPoint } from '@/types/TrackPoint';
 import Map from '../components/Map';
 import fetchRoutes from '@/app/actions/fetchRoute';
 
 export default async function Home() {
   try {
     // Fetch data on the server side
-    const routeData = await fetchRoutes(36534661); // Replace with actual user ID
-    const routeCoordinates = routeData.route.track_points[0];
+    const routeData = await fetchRoutes(138); // Replace with actual route.id
 
-    const coord: TrackPoint = {
-      lat: routeCoordinates.x,
-      lng: routeCoordinates.y
-    }
-    
-    const array: [number, number] [] = [Object.values(coord)];
-
-    
-
-    
-    
-
-    console.log(coord.lat);
-    
+    // Extract track_points and convert to [latitude, longitude] format
+    const routeCoordinates = routeData.route.track_points.map((point: { x: number; y: number }) => [
+      point.y, // Latitude
+      point.x, // Longitude
+    ]);
 
     // Render the map component
     return (
       <div>
         <h1>Ride with GPS Routes</h1>
-        <Map routeCoordinates={array}/>
+        <Map routeCoordinates={routeCoordinates} />
       </div>
     );
   } catch (error) {
@@ -35,4 +24,3 @@ export default async function Home() {
     return <div>Error loading route data.</div>;
   }
 }
-
