@@ -1,8 +1,8 @@
-const fetchRoutes = async (rideId: number) => {
+const fetchUserRoutes = async (userId: number) => {
   const apiKey = process.env.RIDE_WITH_GPS_API_KEY;
 
   const response = await fetch(
-    `https://ridewithgps.com/routes/${rideId}.json?apikey=${apiKey}?auth_token=94e68c62da8a2a66cd16a37af0bdede9`
+    `https://ridewithgps.com/users/${userId}/routes.json?apikey=${apiKey}?auth_token=94e68c62da8a2a66cd16a37af0bdede9`
   );
 
   if (!response.ok) {
@@ -17,4 +17,4 @@ const fetchRoutes = async (rideId: number) => {
   
 };
 
-export default fetchRoutes;
+export default fetchUserRoutes;
